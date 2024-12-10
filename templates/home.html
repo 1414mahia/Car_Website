@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="d-flex flex-wrap px-3 pt-5 align-items-center">
+  <div class="col-6 ">
+    <h4>Welcome Car Project</h4>
+    <p>A car website typically serves as a platform to showcase or facilitate services related to cars.
+      These websites vary in purpose and functionality, catering to diverse audiences like car enthusiasts, buyers, sellers, or service providers</p>
+  </div>
+  <div class="col-6">
+    <img src="{% static 'image/Audi.jpg' %}" alt="">
+  </div>
+</div>
+
+<div class="d-flex flex-wrap px-4" style="height: 20px;">
+
+  <div class="col-2 px-2 mt-2 bg-white">
+    <h5>All Categories</h5>
+    {% for cat in categories %}
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="category" id="{{ cat.id }}">
+      <label class="form-check-label" for="{{ cat.id }}">
+        <a href="{% url 'category_wise_post' cat.slug %}" class="text-decoration-none text-dark">{{ cat.category_name }}</a>
+      </label>
+    </div>
+    {% endfor %}
+  </div>
+  
+  <div class="col-10 p-3">
+    <h4>{{ data|length }} Result(s) Found</h4>
+    <div class="d-flex flex-wrap px-3">
+      <div class="row">
+        {% for post in data %}
+        <div class="col-sm-12">
+          
+          <div class="card mx-2 mb-3">
+            <div class="card-body">
+              <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+
+
+              <h5 class="card-title"><a href="{% url 'post_detail' post.id %}" class="text-decoration-none text-dark">{{ post.title }}</a></h5>
+              <p class="card-text">{{ post.content |truncatewords:10}}</p>
+              <small>Author: {{ post.buyer.first_name }} {{ post.buyer.last_name }}</small><br>
+              <small>Brand: {{ post.brand_name.brand_name }}</small><br>
+                                <p>Description: {{ post.description }}</p>
+              	                  <p>Price: {{ post.price }}</p>
+                                <p>Quantity: {{ post.quantity }}</p>
+              <small>Categories:</small>
+              <div>
+                {% for category in post.category.all %}
+                  <button class="btn btn-warning btn-sm m-2">{{ category.category_name }}</button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

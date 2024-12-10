@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-sm-12">
+    <div class="card mx-2 mb-3">
+        <div class="card-body">
+            <img src="{{ car.image.url }}" class="card-img-top" alt="..." style="width:50%">
+            <h5 class="card-title">{{car.name }}</h5> <!-- Update to match 'name' field -->
+            <p class="card-text">{{ car.description }}</p>
+            <p class="card-text">{{ car.quantity }}</p>
+            <p class="card-text">{{ car.price }}</p>
+            <p class="card-text">{{ car.brand_name.name }}</p> <!-- Assuming Brand model has 'name' field -->
+            <small>Buyer: {{ car.buyer.first_name }} {{ car.buyer.last_name }}</small><br>
+            <small>Categories:</small>
+            <div>
+                {% for category in car.category.all %}
+                    <button class="btn btn-warning btn-sm m-2">{{ category.name }}</button> <!-- Assuming Category model has 'name' field -->
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
